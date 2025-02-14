@@ -18,11 +18,13 @@ const Button = ({ onClick, text }) => {
   )
 }
 
-const Content = ({ text, value }) => {
+
+const StatisticLine = ({text, value}) => {
   return (
-    <>
-      <p>{text} {value}</p>
-    </>
+    <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>
   )
 }
 
@@ -32,15 +34,16 @@ const Statistics = ({good, bad, neutral, all, average, percentage}) => {
   }
 
   return (
-    <div>
-      <Heading title="Statistics" />
-      <Content text="good" value={good} />
-      <Content text="neutral" value={neutral} />
-      <Content text="bad" value={bad} />
-      <Content text="all" value={all} />
-      <Content text="average" value={average} />
-      <Content text="positive feedback" value={percentage} />
-    </div>
+    <table>
+      <tbody>
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="all" value={all} />
+      <StatisticLine text="average" value={average} />
+      <StatisticLine text="positive feedback" value={percentage} />
+      </tbody>
+    </table>
   )
 
 }
@@ -78,7 +81,9 @@ const App = () => {
       <Button onClick={() => handleFeedback('good')} text='good' />
       <Button onClick={() => handleFeedback('neutral')} text='neutral' />
       <Button onClick={() => handleFeedback('bad')} text='bad' />
-    <Statistics good={good} bad={bad} neutral={neutral} all={all} average={average} percentage={percentage} />
+      <Heading title="Statistics" />
+      <Statistics good={good} bad={bad} average={average} all={all}
+       neutral={neutral} percentage={percentage}/>
     </div>
   )
 }
