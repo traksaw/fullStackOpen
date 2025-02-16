@@ -1,4 +1,13 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
+
+const Header = ({text}) => {
+ return (
+  <>
+  <h1>{text}</h1>
+  </>
+ )
+}
 
 const App = () => {
   const anecdotes = [
@@ -12,20 +21,37 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
-  const votes = { 0: 1, 1: 3, 2: 4, 3: 2 }
    
   const [selected, setSelected] = useState(0)
-  const [vote, setVote] = useState(0)
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
   const randomAnecdote = () => {
     let newAnecdote = Math.floor(Math.random() * anecdotes.length)
     setSelected(newAnecdote)
   }
 
+  const voteAnecdote = () => {
+    const copy = [...votes]
+    copy[selected] += 1;
+    setVotes(copy)
+  }
+
   return (
     <div>
+     <Header text='Anecdote of the day'/>
       <p>{anecdotes[selected]}</p>
+      <p>Votes: {votes[selected]}</p>
       <button onClick={randomAnecdote}>Next Anecdote</button>
+      <button onClick={voteAnecdote}>Vote</button>
+
+      <Header text='Anecdote with most votes'/>
+
+      {votes.some((vote) => vote > 0) ? (
+        <p>{anecdotes[votes.indexOf(Math.max(...votes))]}<br/> 
+        {/* if a vote is greater than one, we will get the element's index */}
+        Votes: {Math.max(...votes)}</p> ) : ( 
+          <p>No Votes yet</p>
+      )}
     </div>
   )
 }
